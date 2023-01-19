@@ -1,42 +1,124 @@
-<!doctype html>
+<!doctype html:5>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>Greeter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
       *{font-size:1.5em;}
+      button{
+        width:150px;
+        height: 50px;
+        font-size: 14pt;
+      }
+
+      p {
+        font-family: 'Share Tech Mono', monospace;
+      }
+
+      @media only screen and (min-width: 1024px){
+				body{
+					background-color: red;
+					padding: 100px;
+				}
+      }
     </style>
-    
-  </head>
-<body>
-  <button>Click Me!</button>
-  <input id="input-firstname" placeholder="Type in your name">
-  <p id="output">???</p>
-
-  <script>
+    <script>
     "use strict"
+    window.onload = function()
+    {
+      init();
+    }
 
+    // or window.onload = init();
+
+    let firstName = "Peter";
+    let lastName = "Parker";
+    function init()
+    {
+      const button = document.querySelector("#btn-hello");
+      const gbButton = document.querySelector("#btn-goodbye");
+      button.addEventListener("click", sayHello);
+      gbButton.addEventListener("click", sayGoodbye);
+      //button.onclick = sayHello;
+
+      const output = document.querySelector("#output");
+      output.style.color = "red";
+      output.style.backgroundColor = "yellow";
+    }
+
+    function sayGoodbye()
+    {
+      const inputFN = document.getElementById("input-firstname");
+      const output = document.querySelector("#output");
+      const inputLN = document.getElementById("input-lastname");
+
+      firstName = inputFN.value.trim();
+      lastName = inputLN.value.trim();
+
+      
+      if(firstName == "" || firstName == " " || firstName == false)
+      {
+        firstName = "Peter";
+      }
+      if(lastName == "" || lastName == " " || lastName == false)
+      {
+        lastName = "Parker";
+      }
+
+
+      let fullName = firstName + " " + lastName;
+      //output.innerHTML = "Hello " + fullName;
+      output.innerHTML= `Goodbye ${fullName}`;
+    }
+
+    function sayHello()
+    {
+      const inputFN = document.getElementById("input-firstname");
+      const output = document.querySelector("#output");
+      const inputLN = document.getElementById("input-lastname");
+
+      firstName = inputFN.value.trim();
+      lastName = inputLN.value.trim();
+
+      // Or if name.length == 0
+      if(firstName == "" || firstName == " " || firstName == false)
+      {
+        firstName = "Peter";
+      }
+      if(lastName == "" || lastName == " " || lastName == false)
+      {
+        lastName = "Parker";
+      }
+
+
+      let fullName = firstName + " " + lastName;
+      //output.innerHTML = "Hello " + fullName;
+      output.innerHTML= `Hello ${fullName}`;
+
+
+    }
+    
 // 1 - get a reference to the button
 // 2 - add a click event to button that calls a `sayHello` function
 // 3 - create a `sayHello()` function
 // 3A - get name of person from the <input>
 // 3B - get a reference to the #output <p>
 // 3C - update HTML of #output <p>
+  
 
-    init();
-    function sayHello()
-    {
-        console.log("Hello");
+    
 
-    }
-    function init()
-    {
-        const button = document.querySelector("button");
-        button.addEventListener("click", sayHello);
-        //button.onclick = sayHello;
-    }
-
-
+    
 </script>
+  </head>
+<body>
+  <button id="btn-hello">Say Hello :)</button>
+  <button id="btn-goodbye">Say Goodbye :(</button>
+  <input id="input-firstname" placeholder="Type in your firstname">
+  <input id="input-lastname" placeholder ="Type in your lastname">
+  <p id="output">???</p>
 </body>
 </html>
