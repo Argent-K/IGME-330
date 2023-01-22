@@ -1,40 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8" />
-	<title>Technobabble Generator</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no, maximum-scale=1.0">
-	<style>
-        body {
-            font-family: monospace;
-        }
-
-        #output {
-            font-size: 200%;
-        }
-        #myButton {
-            width: 200px;
-            height: 50pt;
-            font-size: 15pt;
-        }
-
-        @media only screen and (max-width: 600px) {
-            body {
-                text-align: center;
-            }
-        }
-
-    </style>
-	
-</head>
-<body>
-    <h1>Technobabble Generator</h1>
-    <div class="container">
-      <p id="output">Loading...</p>
-      <button id="myButton">More Technobabble!</button>
-    </div>
-<script>
-	"use strict";
+"use strict";
 	
 	const words1 = ["Acute", "Aft", "Anti-matter", "Bipolar", "Cargo", "Command", "Communication", "Computer", "Deuterium", "Dorsal", "Emergency", "Engineering", "Environmental", "Flight", "Fore", "Guidance", "Heat", "Impulse", "Increased", "Inertial", "Infinite", "Ionizing", "Isolinear", "Lateral", "Linear", "Matter", "Medical", "Navigational", "Optical", "Optimal", "Optional", "Personal", "Personnel", "Phased", "Reduced", "Science", "Ship's", "Shuttlecraft", "Structural", "Subspace", "Transporter", "Ventral"];
 	
@@ -62,7 +26,3 @@
         const str = `${randomElement(words1)} ${randomElement(words2)} ${randomElement(words3)}`;
         document.querySelector("#output").innerHTML = str;
     }
-
-</script>
-</body>
-</html>
