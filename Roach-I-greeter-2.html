@@ -43,7 +43,9 @@
       button.addEventListener("click", sayHello);
       gbButton.addEventListener("click", sayGoodbye);
       //button.onclick = sayHello;
-
+      //button.onclick = function() {
+        //greet("Hello there");
+      //};
       const output = document.querySelector("#output");
       output.style.color = "red";
       output.style.backgroundColor = "yellow";
@@ -67,7 +69,9 @@
       {
         lastName = "Parker";
       }
-
+      // firstName = firstName.length ? firstName : "Peter";
+      // firstName = firstName ? firstName : "Peter";
+      // firstName = firstName || "Peter";
 
       let fullName = firstName + " " + lastName;
       //output.innerHTML = "Hello " + fullName;
@@ -99,6 +103,15 @@
       output.innerHTML= `Hello ${fullName}`;
 
 
+    }
+
+    function greet(greeting)
+    {
+      let name = document.querySelector("#input-firstname").value.trim();
+      name = name || "Peter";
+
+      let output = document.querySelector("#output");
+      output.innerHTML =`${greeting} ${name}`;
     }
     
 // 1 - get a reference to the button
