@@ -24,10 +24,14 @@
 					padding: 100px;
 				}
       }
+
+      label {
+        font-size: 14pt;
+      }
     </style>
     <script>
     "use strict"
-    window.onload = function()
+    window.onload = () =>
     {
       init();
     }
@@ -36,82 +40,99 @@
 
     let firstName = "Peter";
     let lastName = "Parker";
-    function init()
+    let shoutBox;
+    const init = () =>
     {
       const button = document.querySelector("#btn-hello");
       const gbButton = document.querySelector("#btn-goodbye");
-      button.addEventListener("click", sayHello);
-      gbButton.addEventListener("click", sayGoodbye);
+      shoutBox = document.querySelector("#shoutify");
+      //button.addEventListener("click", greet("Greeting"));
+      //gbButton.addEventListener("click", greet("Goodbye"));
       //button.onclick = sayHello;
-      //button.onclick = function() {
-        //greet("Hello there");
-      //};
+      
+      button.onclick = () => {
+        greet("Hello there", shoutBox.checked);
+      };
+      gbButton.onclick = () => {
+        greet("Goodbye", shoutBox.checked);
+      }
       const output = document.querySelector("#output");
       output.style.color = "red";
       output.style.backgroundColor = "yellow";
     }
 
-    function sayGoodbye()
-    {
-      const inputFN = document.getElementById("input-firstname");
-      const output = document.querySelector("#output");
-      const inputLN = document.getElementById("input-lastname");
+    // function sayGoodbye()
+    // {
+    //   const inputFN = document.getElementById("input-firstname");
+    //   const output = document.querySelector("#output");
+    //   const inputLN = document.getElementById("input-lastname");
 
-      firstName = inputFN.value.trim();
-      lastName = inputLN.value.trim();
+    //   firstName = inputFN.value.trim();
+    //   lastName = inputLN.value.trim();
 
       
-      if(firstName == "" || firstName == " " || firstName == false)
-      {
-        firstName = "Peter";
-      }
-      if(lastName == "" || lastName == " " || lastName == false)
-      {
-        lastName = "Parker";
-      }
-      // firstName = firstName.length ? firstName : "Peter";
-      // firstName = firstName ? firstName : "Peter";
-      // firstName = firstName || "Peter";
+    //   if(firstName == "" || firstName == " " || firstName == false)
+    //   {
+    //     firstName = "Peter";
+    //   }
+    //   if(lastName == "" || lastName == " " || lastName == false)
+    //   {
+    //     lastName = "Parker";
+    //   }
+    //   // firstName = firstName.length ? firstName : "Peter";
+    //   // firstName = firstName ? firstName : "Peter";
+    //   // firstName = firstName || "Peter";
 
-      let fullName = firstName + " " + lastName;
-      //output.innerHTML = "Hello " + fullName;
-      output.innerHTML= `Goodbye ${fullName}`;
-    }
+    //   let fullName = firstName + " " + lastName;
+    //   //output.innerHTML = "Hello " + fullName;
+    //   output.innerHTML= `Goodbye ${fullName}`;
+    // }
 
-    function sayHello()
+    // function sayHello()
+    // {
+    //   const inputFN = document.getElementById("input-firstname");
+    //   const output = document.querySelector("#output");
+    //   const inputLN = document.getElementById("input-lastname");
+
+    //   firstName = inputFN.value.trim();
+    //   lastName = inputLN.value.trim();
+
+    //   // Or if name.length == 0
+    //   if(firstName == "" || firstName == " " || firstName == false)
+    //   {
+    //     firstName = "Peter";
+    //   }
+    //   if(lastName == "" || lastName == " " || lastName == false)
+    //   {
+    //     lastName = "Parker";
+    //   }
+
+
+    //   let fullName = firstName + " " + lastName;
+    //   //output.innerHTML = "Hello " + fullName;
+    //   output.innerHTML= `Hello ${fullName}`;
+
+
+    // }
+
+    const greet = (greeting, shout) =>
     {
-      const inputFN = document.getElementById("input-firstname");
-      const output = document.querySelector("#output");
-      const inputLN = document.getElementById("input-lastname");
+      let firstName = document.querySelector("#input-firstname").value.trim();
+      firstName = firstName || "Peter";
 
-      firstName = inputFN.value.trim();
-      lastName = inputLN.value.trim();
-
-      // Or if name.length == 0
-      if(firstName == "" || firstName == " " || firstName == false)
-      {
-        firstName = "Peter";
-      }
-      if(lastName == "" || lastName == " " || lastName == false)
-      {
-        lastName = "Parker";
-      }
-
-
-      let fullName = firstName + " " + lastName;
-      //output.innerHTML = "Hello " + fullName;
-      output.innerHTML= `Hello ${fullName}`;
-
-
-    }
-
-    function greet(greeting)
-    {
-      let name = document.querySelector("#input-firstname").value.trim();
-      name = name || "Peter";
+      let lastName = document.querySelector("#input-lastname").value.trim();
+      lastName = lastName || "Parker";
 
       let output = document.querySelector("#output");
-      output.innerHTML =`${greeting} ${name}`;
+
+      if(shout)
+      {
+        output.innerHTML =`${greeting} ${firstName} ${lastName}`.toUpperCase();
+      }
+      else 
+      {
+        output.innerHTML =`${greeting} ${firstName} ${lastName}`;
+      }
     }
     
 // 1 - get a reference to the button
@@ -130,8 +151,12 @@
 <body>
   <button id="btn-hello">Say Hello :)</button>
   <button id="btn-goodbye">Say Goodbye :(</button>
+  <input type="checkbox" id="shoutify" name="shoutify">
+  <label for="shoutify">Shoutify</label>
+  <hr>
   <input id="input-firstname" placeholder="Type in your firstname">
   <input id="input-lastname" placeholder ="Type in your lastname">
+
   <p id="output">???</p>
 </body>
 </html>
