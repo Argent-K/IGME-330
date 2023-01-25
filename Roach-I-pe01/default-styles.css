@@ -11,6 +11,10 @@ body {
     font-size: 15pt;
 }
 
+h1 {
+    font-family: 'Aboreto', cursive;
+}
+
 @media only screen and (max-width: 600px) {
     body {
         text-align: center;
