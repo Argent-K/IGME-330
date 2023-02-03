@@ -32,7 +32,6 @@
                 document.querySelector("#output").innerHTML = "xml is null!";
                 return;
             }
-
             const dogNames = xml.querySelector("namelist[cid='dognames']").textContent.split(",");
             const catNames = xml.querySelector("namelist[cid='catnames']").textContent.split(",");
             const birdNames = xml.querySelector("namelist[cid='birdnames']").textContent.split(",");

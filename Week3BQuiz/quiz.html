@@ -1,0 +1,31 @@
+<!doctype html:5>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Quiz</title>
+    <style>
+
+    </style>
+    <script>
+    "use strict"
+
+    window.onload = () =>
+    {
+      init();
+    }
+
+    const init = () =>
+    { 
+        const colors = "red,green,blue";
+        let colorArray = colors.split(",");
+        let colorHtml = `<ol>${colorArray.map(w => `<li>${w}</li>`).join("")}</ol>`;;
+
+        document.querySelector("#output").innerHTML = colorHtml;
+    }
+        
+    </script>
+  </head>
+<body>
+    <div id="output"></div>
+</body>
+</html>
