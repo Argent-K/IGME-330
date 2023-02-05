@@ -6,7 +6,7 @@ body {
     font-size: 200%;
     white-space: pre-wrap;
 }
-#myButton {
+#btn-gen-1 {
     width: 200px;
     height: 50pt;
     font-size: 15pt;
@@ -21,6 +21,10 @@ h1 {
     height: 75pt;
     font-size: 1.5rem;
     display: none;
+}
+
+div {
+    color: black;
 }
 
 @media only screen and (max-width: 600px) {
@@ -62,7 +66,7 @@ h1 {
         background-color: #23D160;
     }
 
-    #myButton {
+    #btn-gen-1 {
         width: 300px;
         height: 75pt;
         font-size: 1.5rem;
