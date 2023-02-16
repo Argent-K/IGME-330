@@ -17,15 +17,19 @@
 		// #1 call the `init` function after the pages loads
 		window.onload = init;
 	
+		let ctx;
+		let paused = false;
+		let canvas;
+
 		function init(){
 			console.log("page loaded!");
 			// #2 Now that the page has loaded, start drawing!
 			
 			// A - `canvas` variable points at <canvas> tag
-			let canvas = document.querySelector("canvas");
+			canvas = document.querySelector("canvas");
 			
 			// B - the `ctx` variable points at a "2D drawing context"
-			let ctx = canvas.getContext("2d");
+			ctx = canvas.getContext("2d");
 			
 			// C - all fill operations are now in red
 			ctx.fillStyle = "red"; 
@@ -127,6 +131,91 @@
             ctx.strokeStyle = "magenta";
             ctx.strokeRect(510,30,100,100);
 
+			update();
+		}
+
+		function update()
+		{
+			if(paused) return;
+			requestAnimationFrame(update);
+
+				drawRandomRect(ctx);
+				drawRandomLine(ctx);
+				drawVertRandomLine(ctx);
+
+		}
+
+		function drawRandomRect(ctx)
+		{
+			drawRectangle(ctx,getRandomInt(0, 640),getRandomInt(0,480),getRandomInt(10,90),getRandomInt(10,90),getRandomColor(),getRandomInt(2, 12),getRandomColor())
+		}
+
+		function drawRandomLine(ctx)
+		{
+			ctx.strokeStyle = getRandomColor();
+			ctx.beginPath();
+			ctx.moveTo(0 ,getRandomInt(0, 640));
+			ctx.lineTo(640,getRandomInt(0, 640));
+			ctx.closePath();
+			ctx.lineWidth = getRandomInt(2, 12);
+			ctx.stroke();
+		}
+
+		function drawVertRandomLine(ctx)
+		{
+			ctx.strokeStyle = getRandomColor();
+			ctx.beginPath();
+			ctx.moveTo(getRandomInt(0, 640),0);
+			ctx.lineTo(getRandomInt(0, 640), 480);
+			ctx.closePath();
+			ctx.lineWidth = getRandomInt(2, 12);
+			ctx.stroke();
+		}
+
+		// Event handlers
+		function canvasClicked(e){
+			let rect = e.target.getBoundingClientRect();
+			let mouseX = e.clientX - rect.x;
+			let mouseY = e.clientY - rect.y;
+			console.log(mouseX,mouseY);
+
+			for (let i = 0; i < 10; i++)
+			{
+				let x = getRandomInt(-100, 100) + mouseX;
+				let y = getRandomInt(-100, 100) + mouseY;
+				let width = getRandomInt(20,50);
+				let height = getRandomInt(20,50);
+				let color = getRandomColor();
+				drawRectangle(ctx, x, y, width, height, color);
+			}
+		}
+
+		// canvas helpers
+		function drawRectangle(ctx,x,y,width,height,fillStyle="black",lineWidth=0,strokeStyle="black") {
+			ctx.save();
+			ctx.fillStyle = fillStyle;
+			ctx.beginPath();
+			ctx.rect(x,y,width,height);
+			ctx.fill();
+			if(lineWidth > 0 ) {
+				ctx.lineWidth = lineWidth;
+				ctx.strokeStyle = strokeStyle;
+				ctx.stroke();
+			}
+			ctx.closePath();
+			ctx.restore();
+		}
+
+		// handy utility functions!
+		function getRandomColor(){
+  				function getByte(){
+    				return 55 + Math.round(Math.random() * 200);
+  				}
+  				return "rgba(" + getByte() + "," + getByte() + "," + getByte() + ",.8)";
+			}
+
+		function getRandomInt(min, max) {
+  			return Math.floor(Math.random() * (max - min + 1)) + min;
 		}
 	</script>
 </head>
