@@ -12,17 +12,33 @@
 	let c = 2;
 	let divergence = 137.5;
 	let petalSize = 2;
+	let fps = 60;
+
+	let fadeBox;
 
 	function init(){
 		ctx = canvas.getContext("2d");
+		fadeBox = document.querySelector("#cb-fade");
 		canvas.width = canvasWidth;
 		canvas.height = canvasHeight;
 		ctx.fillRect(0,0,canvasWidth,canvasHeight);
+		setupUI();
 		loop();
 	}
 
 	function loop(){
-     	setTimeout(loop,1000/30);
+     	setTimeout(loop,1000/60);
+
+		if(fadeBox.checked)
+		{
+			ctx.save();
+			ctx.fillStyle = "black";
+			ctx.globalAlpha = 1/fps/2;
+			ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+			ctx.restore();
+		}
+
+
 
 		let a = n * dtr(divergence);
 		let r = c * Math.sqrt(n);
@@ -39,10 +55,24 @@
 		//let color = `hsl(${aDegrees},100%,50%)`;
 		let color = `hsl(${n/5 % 361},100%,50%)`;
 		drawCircle(ctx,x,y,petalSize,color);
-   		n+=2;
+   		n+=1;
 		c+=.01;
 		petalSize+=.01;
 		divergence +=.005;
+	}
+
+	function setupUI() {
+		document.querySelector("#btn-restart").onclick = function () {
+			ctx.save();
+			ctx.fillStyle = "black";
+			ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+			ctx.restore();
+
+			n = 0;
+			c = 2;
+			divergence = 137.5;
+			petalSize = 2;
+		};
 	}
 
 	// helpers
@@ -65,6 +95,22 @@
 </head>
 <body>
 <canvas id="canvas"></canvas>
+<div id="controls">
+	<button id="btn-restart">Restart App</button>
+	<input type="checkbox" id="cb-fade" unchecked>
+	<label for="cb-fade">Fade</label> 
+</div>
 
+<h2>About this app</h2>
+<ul>
+	<li> The "Restart App" button will restore the app to n=1 and reset the inital petal size and padding</li>
+	<li> The fade checkbox adds a fading effect to the flower, works best when check before flower is being made or during early stages of the flower</li>
+	<li>Changes made from the starter code</li>
+	<ul>
+		<li>Increased the frame rate to 60 fps (required)</li>
+		<li>The c value starts at 2 and slowly increases</li>
+		<li>Added a petal size variable that slowly increases</li>
+	</ul>
+</ul>
 </body>
 </html>
