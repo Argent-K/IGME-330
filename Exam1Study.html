@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Study</title>
+	<style>
+		
+	</style>
+	<script>
+	
+	// START CODE
+	"use strict";
+	
+    let sum;
+
+    const addUp = (n1, n2) =>  n1 + n2;
+        
+
+
+    function test1() {
+        console.log("top of function",i, score);
+        for (var i =0; i<10; i++)
+        {
+            var score = 100;
+        }
+        console.log("bottom of function",i,score);
+
+
+        // "top of function" undefined undefined
+        // "bottom of function" 10 100
+    }
+
+    function test2() {
+        console.log("top of function",i,score);
+        for(let i = 0; i <10; i++)
+        {
+            let score = 100;
+        }
+        console.log("bottom of function",i,score);
+
+        // uncaugt referecne error i is not defined
+        // 
+    }
+
+    let score = 10;
+    function incrementScore(flag){
+        score ++;
+    if(flag) {
+            let score = 1000;
+            return score;
+        }
+        return score;
+    }
+        
+    const greet = (name) => {
+        return `hello   ${name}`;
+    }
+
+    function doubleIt(num) {
+        return num * 2;
+    }
+
+	const init = () => {
+		sum = addUp(5, 10);
+        test1();
+       // test2();
+
+        incrementScore();
+        console.log("Log #1", score);
+        console.log("Log #2", incrementScore(true));
+        console.log("Log #3", incrementScore(false));
+        console.log("Log #4", score);
+
+        console.log(greet());
+        console.log(doubleIt());
+
+        let htmlElement = document.querySelector(".my-class").innerHTML = "Hello";
+        let htmlElement2 = document.querySelector("#important").style.color = "red";
+        // Falsy values ( null, 0, false, undefined, "", NaN)
+
+
+        // import {addSum} from ""./utils.js"
+	};
+	
+	
+	window.onload = init;
+	
+	</script>
+</head>
+<body>
+  <h2 class="my-class" id="important">Exam 1</h2>
+
+</body>
+</html>
