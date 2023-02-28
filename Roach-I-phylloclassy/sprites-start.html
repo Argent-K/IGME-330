@@ -8,7 +8,7 @@
 	
 	class CircleSprite{
 		static type = "arc"; // demoing a static (class) variable here
-		constructor(x,y,radius,color){
+		constructor({x=0,y=0,radius=10,color="white"} = {}){
 			console.log(`${this.constructor.type} created`); // access static property (alternatively, CircleSprite.type)
 		// YOU DO THIS - initialize .x, .y, .radius and .color properties
 		// this.x = x,
@@ -16,7 +16,8 @@
 		// this.radius = radius,
 		// this.color = color
 		Object.assign(this,[x, y, radius, color]);
-
+		// or Object.assign(this,{x, y, radius, color}); allows use of this.x/y/radius/color
+		return Object.seal(this);
 		}
 	
 		update(){
@@ -52,11 +53,16 @@
           setTimeout(loop, 1000/60);
           ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
-		  for(let i = 0; i < sprites.length; i++)
-		  {
-			sprites[i].update();
-			sprites[i].draw(ctx);
-		  }
+		//   for(let i = 0; i < sprites.length; i++)
+		//   {
+		// 	sprites[i].update();
+		// 	sprites[i].draw(ctx);
+		//   }
+
+		  sprites.forEach(s => {
+			s.update();
+			s.draw(ctx);
+		  });
 
 		  
 	}
@@ -67,8 +73,9 @@
           canvas.height = canvasHeight;
 
 		  
-		  sprites.push(new CircleSprite(100, 100, 20, "green"));
-		  sprites.push(new CircleSprite(100, 200, 30, "red"));
+		  sprites.push(new CircleSprite(
+			{x:100, y:100, radius:20, color:"green"}));
+		  sprites.push(new CircleSprite({x:100, y:200, radius:30, color:"red"}));
 		  console.log(sprites);
 
           loop();
