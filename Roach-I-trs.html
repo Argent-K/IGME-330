@@ -47,7 +47,7 @@
 			drawSquare2(ctx,500,350,100,100,rotation,"purple",1.25);
 
 			drawTriangle1(ctx,340, 240,0, -50, 50, 50, -50, 50,rotation,"red","purple",1,5);
-			drawTriangle1(ctx,100, 240 + (Math.cos(rotation) * 100),0, -50, 50, 50, -50, 50,rotation,"red","purple",Math.sin(rotation),5);
+			drawTriangle1(ctx,100, 240 + (Math.cos(rotation) * 100),0, -50, 50, 50, -50, 50,rotation,"red","purple",Math.abs(Math.sin(rotation)),5);
 			// do some transformations?
 			ctx.save();
 			ctx.translate(100,0);
