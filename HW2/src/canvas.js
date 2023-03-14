@@ -6,13 +6,52 @@
 	  - and then draw something representative on the canvas
 	  - maybe a better name for this file/module would be *visualizer.js* ?
 */
+class DurationTrack {
 
+    // using current time / duration to get % of song time
+    // then width * % = location of sprite
+    constructor(x, y, radius=5, color="white", duration)
+    {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.color = color;
+        this.duration = duration;
+    }
+
+    draw(ctx)
+    {
+        ctx.save();
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+    }
+
+    update()
+    {
+        
+        if(audio.audioCtx.state != "suspended")
+        this.x = (canvasWidth * ((audio.audioCtx.currentTime  + 1) / this.duration));
+        
+    }
+}
+
+import * as audio from './audio.js';
+//import { audioCtx } from './audio.js';
 import * as utils from './utils.js';
 
 let ctx,canvasWidth,canvasHeight,gradient,analyserNode,audioData;
+let toggleDataType = false;
+let pauseSprites = true;
+let background;
+let imgLoaded = false;
 
+let sprites = [];
 
-function setupCanvas(canvasElement,analyserNodeRef){
+const setupCanvas = (canvasElement,analyserNodeRef) => {
 	// create drawing context
 	ctx = canvasElement.getContext("2d");
 	canvasWidth = canvasElement.width;
@@ -23,12 +62,31 @@ function setupCanvas(canvasElement,analyserNodeRef){
 	analyserNode = analyserNodeRef;
 	// this is the array where the analyser data will be stored
 	audioData = new Uint8Array(analyserNode.fftSize/2);
+
+
+    background = new Image();
+    background.src = "media/grovyle.png";
+    background.onload = () => {
+        // 3.125
+        ctx.drawImage(background, 0,0, background.width * 3.125, background.height * 3.125);
+        console.log(background.width, background.height);
+        imgLoaded = true;
+    }
+
+    sprites.push(new DurationTrack(0, 500, 25, "red", 249));
+
 }
 
-function draw(params={}){
+const draw = (params={}) => {
   // 1 - populate the audioData array with the frequency data from the analyserNode
 	// notice these arrays are passed "by reference" 
-	analyserNode.getByteFrequencyData(audioData);
+    if(toggleDataType == false)
+    {
+        analyserNode.getByteFrequencyData(audioData);
+    }
+	else {
+        analyserNode.getByteTimeDomainData(audioData);
+    }
 	// OR
 	//analyserNode.getByteTimeDomainData(audioData); // waveform data
 	
@@ -36,15 +94,25 @@ function draw(params={}){
 	ctx.save();
     ctx.fillStyle = "black";
     ctx.globalAlpha = .1;
-    ctx.fillRect(0,0,canvasWidth,canvasHeight);
+    //ctx.fillRect(0,0,canvasWidth,canvasHeight);
+    if (imgLoaded == true)
+    ctx.drawImage(background, 0, 0, background.width * 3.125, background.height * 3.125);
     ctx.restore();
 		
+    sprites.forEach(s => {
+        s.update();
+        s.draw(ctx);
+    });
+
+
 	// 3 - draw gradient
 	if(params.showGradient) {
         ctx.save();
         ctx.fillStyle = gradient;
         ctx.globalAlpha = .3;
         ctx.fillRect(0,0,canvasWidth,canvasHeight);
+
+
         ctx.restore();
     }
 	// 4 - draw bars
@@ -153,8 +221,21 @@ function draw(params={}){
         }
     }
 
+    
+
 	// D) copy image data back to canvas
     ctx.putImageData(imageData, 0, 0);
 }
 
-export {setupCanvas,draw};
+const ToggleDataType = () =>
+{
+    toggleDataType = !toggleDataType;
+}
+
+const PauseSprites = () =>
+{
+    pauseSprites = !pauseSprites;
+}
+
+
+export {setupCanvas,draw, ToggleDataType};

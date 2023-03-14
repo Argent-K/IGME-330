@@ -22,31 +22,62 @@ const drawParams = {
 
 // 1 - here we are faking an enumeration
 const DEFAULTS = Object.freeze({
-	sound1  :  "media/New Adventure Theme.mp3"
+	sound1  :  "media/Dialga's Fight to the Finish.mp3"
 });
+let lowshelf = false;
+let highshelf = false;
 
-function init(){
+
+const init = () => {
     
 	console.log("init called");
 	console.log(`Testing utils.getRandomColor() import: ${utils.getRandomColor()}`);
   audio.setupWebaudio(DEFAULTS.sound1);
 	let canvasElement = document.querySelector("canvas"); // hookup <canvas> element
+
+  
+
+
+
 	setupUI(canvasElement);
   canvas.setupCanvas(canvasElement, audio.analyserNode);
   loop();
 }
 
-function setupUI(canvasElement){
+const setupUI = (canvasElement) => {
   // A - hookup fullscreen button
-  const fsButton = document.querySelector("#fsButton");
-  const playButton = document.querySelector("#playButton");
+  const fsButton = document.querySelector("#btn-fs");
+  const playButton = document.querySelector("#btn-play");
 	
-  const gradientCB = document.querySelector("#gradientCB");
-  const barsCB = document.querySelector("#barsCB");
-  const circlesCB = document.querySelector("#circlesCB");
-  const noiseCB = document.querySelector("#noiseCB");
-  const invertCB = document.querySelector("#invertCB");
-  const embossCB = document.querySelector("#embossCB");
+  const gradientCB = document.querySelector("#cb-gradient");
+  const barsCB = document.querySelector("#cb-bars");
+  const circlesCB = document.querySelector("#cb-circles");
+  const noiseCB = document.querySelector("#cb-noise");
+  const invertCB = document.querySelector("#cb-invert");
+  const embossCB = document.querySelector("#cb-emboss");
+
+  // Filters
+  document.querySelector('#cb-highshelf').checked = highshelf; // `highshelf` is a boolean we will declare in a second
+  document.querySelector('#cb-lowshelf').checked = lowshelf;
+
+  document.querySelector('#cb-highshelf').onchange = e => {
+    highshelf = e.target.checked;
+    toggleHighshelf(); // turn on or turn off the filter, depending on the value of `highshelf`!
+  };
+
+  document.querySelector('#cb-lowshelf').onchange = e => {
+    lowshelf = e.target.checked;
+    toggleLowshelf(); // turn on or turn off the filter, depending on the value of `highshelf`!
+  };
+
+  toggleHighshelf();
+  toggleLowshelf();
+
+  // Time Domain Toggle
+  document.querySelector('#cb-timedomain').onchange = e => {
+    canvas.ToggleDataType();
+  }
+
 
   gradientCB.onchange = e => {
     drawParams.showGradient = !drawParams.showGradient;
@@ -90,15 +121,33 @@ function setupUI(canvasElement){
         // if track is currently paused, play it
         audio.playCurrentSound();
         e.target.dataset.playing = "yes"; // our CSS will set the text to Pause
+      
+
+
+
+
+
+
+
+
+
+
         // if track is playing, pause it
     } else {
         audio.pauseCurrentSound();
         e.target.dataset.playing = "no"; // our CSS will set the text to "play"
+        audio.audioCtx.suspend();
+
+
+
+
+
+
     }
   };
 	
-  let volumeSlider = document.querySelector("#volumeSlider");
-  let volumeLabel = document.querySelector("#volumeLabel");
+  let volumeSlider = document.querySelector("#slider-volume");
+  let volumeLabel = document.querySelector("#label-volume");
 
   // add .oninput event to slider
   volumeSlider.oninput = e => {
@@ -112,10 +161,17 @@ function setupUI(canvasElement){
   volumeSlider.dispatchEvent(new Event("input"));
 
   // D - hookup track <select>
-  let trackSelect = document.querySelector("#trackSelect");
+  let trackSelect = document.querySelector("#track-select");
   // add.onchange event to <select>
   trackSelect.onchange = e => {
-    audio.loadSoundFile(e.target.value);
+    let file = e.target.value;
+    audio.loadSoundFile(file);
+
+
+
+
+
+
     // pause the current track if it is playing
     if (playButton.dataset.playing == "yes") {
         playButton.dispatchEvent(new MouseEvent("click"));
@@ -124,10 +180,12 @@ function setupUI(canvasElement){
 
 } // end setupUI
 
-function loop(){
+const loop = () => {
     // /* NOTE: This is temporary testing code that we will delete in Part II */
-  requestAnimationFrame(loop);
-  canvas.draw(drawParams);
+    // For drawing sprite across screen use (canvas width / duration of song / fps)
+    setTimeout(loop, 1000/60);
+    //requestAnimationFrame(loop);
+    canvas.draw(drawParams);
     //     // 1) create a byte array (values of 0-255) to hold the audio data
     //     // normally, we do this once when the program starts up, NOT every frame
     //     let audioData = new Uint8Array(audio.analyserNode.fftSize/2);
@@ -153,5 +211,25 @@ function loop(){
     //         console.log(`loudnessAt2K = ${loudnessAt2K}`);
     //         console.log("---------------------");
     }
+
+    function toggleHighshelf(){
+      if(highshelf){
+          audio.biquadFilter.frequency.setValueAtTime(1000, audio.audioCtx.currentTime); // we created the `biquadFilter` (i.e. "treble") node last time
+          audio.biquadFilter.gain.setValueAtTime(10, audio.audioCtx.currentTime);
+      }else{
+          audio.biquadFilter.gain.setValueAtTime(0, audio.audioCtx.currentTime);
+      }   
+  }
+
+  function toggleLowshelf(){
+      if(lowshelf){
+          audio.lowShelfBiquadFilter.frequency.setValueAtTime(1000, audio.audioCtx.currentTime);
+          // gets current time of song audio.audioCtx.currentTime
+          audio.lowShelfBiquadFilter.gain.setValueAtTime(10, audio.audioCtx.currentTime);
+      }else{
+          audio.lowShelfBiquadFilter.gain.setValueAtTime(0, audio.audioCtx.currentTime);
+      }
+  }
+
 
 export {init};
