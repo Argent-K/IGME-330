@@ -1,0 +1,13 @@
+{
+    "Title": "Audio Visualizer",
+    "audio":
+        {
+            "name": "Fight to the Finish"
+        },
+    "uiState": {
+        "showBars": true,
+        "treble": false,
+        "bass": false,
+        "domainData": false
+    }
+}

@@ -1,6 +1,6 @@
 /*
-	The purpose of this file is to take in the analyser node and a <canvas> element: 
-	  - the module will create a drawing context that points at the <canvas> 
+	The purpose of this file is to take in the analyser node and a <canvas> element:
+	  - the module will create a drawing context that points at the <canvas>
 	  - it will store the reference to the analyser node
 	  - in draw(), it will loop through the data in the analyser node
 	  - and then draw something representative on the canvas
@@ -23,7 +23,8 @@ class DurationTrack {
     {
         ctx.save();
         ctx.beginPath();
-        ctx.fillStyle = this.color;
+        ctx.fillStyle = `rgba(${Math.sin(this.x) * 255},${Math.cos(this.x) * 255},${Math.tan(this.x) * 255},1)`;
+        //ctx.fillStyle = `rgb(${},${-128},${255-})`;
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.closePath();
         ctx.fill();
@@ -32,11 +33,57 @@ class DurationTrack {
 
     update()
     {
-        
+
         if(audio.audioCtx.state != "suspended")
         this.x = (canvasWidth * ((audio.audioCtx.currentTime  + 1) / this.duration));
-        
+
+
+
     }
+}
+
+class PhylloFLower {
+    constructor(centerX, centerY, divergence, c)
+    {
+        this.n = 0;
+        this.centerX = centerX;
+        this.centerY = centerY;
+        this.divergence = divergence;
+        this.c = c;
+    }
+
+    update()
+    {
+        if(audio.audioCtx.state != "suspended")
+        this.n++;
+        if(audio.audioCtx.currentTime % 10 == 0)
+        this.n = 0;
+    }
+
+    draw(ctx)
+    {
+            let a = this.n * this.dtr(this.divergence);
+		    let r = this.c * Math.sqrt(this.n);
+		    let x = r * Math.cos(a) + this.centerX;
+		    let y = r * Math.sin(a) + this.centerY;
+		    let color = `hsl(${audio.audioCtx.currentTime % 361},100%,50%)`;
+            this.drawCircle(ctx, x, y, 2, color);
+    }
+
+    dtr(degrees) {
+        return degrees * (Math.PI/180);
+    }
+
+    drawCircle(ctx,x,y,radius,color){
+        ctx.save();
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(x,y,radius,0,Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+    }
+
 }
 
 import * as audio from './audio.js';
@@ -73,13 +120,14 @@ const setupCanvas = (canvasElement,analyserNodeRef) => {
         imgLoaded = true;
     }
 
-    sprites.push(new DurationTrack(0, 500, 25, "red", 249));
+    sprites.push(new DurationTrack(0, 250, 5, "red", 249));
+    sprites.push(new PhylloFLower(167, 64, 137.7, 1));
 
 }
 
 const draw = (params={}) => {
   // 1 - populate the audioData array with the frequency data from the analyserNode
-	// notice these arrays are passed "by reference" 
+	// notice these arrays are passed "by reference"
     if(toggleDataType == false)
     {
         analyserNode.getByteFrequencyData(audioData);
@@ -89,7 +137,7 @@ const draw = (params={}) => {
     }
 	// OR
 	//analyserNode.getByteTimeDomainData(audioData); // waveform data
-	
+
 	// 2 - draw background
 	ctx.save();
     ctx.fillStyle = "black";
@@ -98,7 +146,7 @@ const draw = (params={}) => {
     if (imgLoaded == true)
     ctx.drawImage(background, 0, 0, background.width * 3.125, background.height * 3.125);
     ctx.restore();
-		
+
     sprites.forEach(s => {
         s.update();
         s.draw(ctx);
@@ -124,14 +172,33 @@ const draw = (params={}) => {
         let barHeight = 200;
         let topSpacing = 100;
 
+        // ctx.save();
+        // ctx.fillStyle = 'rgba(255,255,255,0.50)';
+        // ctx.strokeStyle = 'rgba(0,0,0,0.50)';
+        // // loop through the data and draw!
+        // for (let i = 0; i < audioData.length; i++)
+        // {
+        //     ctx.fillRect(margin + i * (barWidth + barSpacing), topSpacing + 256-audioData[i],barWidth,barHeight);
+        //     ctx.strokeRect(margin + i * (barWidth + barSpacing),topSpacing + 256-audioData[i],barWidth,barHeight);
+        // }
+        // ctx.restore();
+
+
         ctx.save();
-        ctx.fillStyle = 'rgba(255,255,255,0.50)';
-        ctx.strokeStyle = 'rgba(0,0,0,0.50)';
-        // loop through the data and draw!
-        for (let i = 0; i < audioData.length; i++)
+        ctx.fillStyle = "red";
+        ctx.translate(-10,250);
+        for(let b of audioData)
         {
-            ctx.fillRect(margin + i * (barWidth + barSpacing), topSpacing + 256-audioData[i],barWidth,barHeight);
-            ctx.strokeRect(margin + i * (barWidth + barSpacing),topSpacing + 256-audioData[i],barWidth,barHeight);
+            let percent = b/255;
+            if(percent <.02) percent =.15;
+            ctx.translate(10, 0);
+            //ctx.save();
+            ctx.scale(1, -1);
+            ctx.fillStyle = `rgb(${b}, ${b-128}, ${255-b})`;
+            ctx.fillRect(0, 5, 10, 100 * percent);
+            //ctx.restore();
+
+            ctx.translate(0, 0);
         }
         ctx.restore();
     }
@@ -168,28 +235,28 @@ const draw = (params={}) => {
             ctx.arc(canvasWidth/2, canvasHeight/2, circleRadius * .50, 0, 2 * Math.PI, false);
             ctx.closePath();
             ctx.restore();
-            
+
         }
         ctx.restore();
     }
-		
+
 
     // 6 - bitmap manipulation
-	// TODO: right now. we are looping though every pixel of the canvas (320,000 of them!), 
+	// TODO: right now. we are looping though every pixel of the canvas (320,000 of them!),
 	// regardless of whether or not we are applying a pixel effect
 	// At some point, refactor this code so that we are looping though the image data only if
 	// it is necessary
 
 	// A) grab all of the pixels on the canvas and put them in the `data` array
 	// `imageData.data` is a `Uint8ClampedArray()` typed array that has 1.28 million elements!
-	// the variable `data` below is a reference to that array 
+	// the variable `data` below is a reference to that array
     let imageData = ctx.getImageData(0,0, canvasWidth,canvasHeight);
     let data = imageData.data;
     let length = data.length;
     let width = imageData.width; // not using here
-	
+
 	// B) Iterate through each pixel, stepping 4 elements at a time (which is the RGBA for 1 pixel)
-    for (let i = 0; i < length; i += 4) {    
+    for (let i = 0; i < length; i += 4) {
 		// C) randomly change every 20th pixel to red
         if (params.showNoise && Math.random() < .05) {
 			// data[i] is the red channel
@@ -210,9 +277,9 @@ const draw = (params={}) => {
             // data[i+3] is the alpha, but we're leaving that alone
         }
 
-        
+
 	}// end for
-	
+
     if(params.showEmboss)
     {
         for(let i = 0; i < length; i++) {
@@ -221,7 +288,7 @@ const draw = (params={}) => {
         }
     }
 
-    
+
 
 	// D) copy image data back to canvas
     ctx.putImageData(imageData, 0, 0);

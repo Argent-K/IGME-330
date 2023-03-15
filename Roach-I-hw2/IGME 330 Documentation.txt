@@ -1,0 +1,8 @@
+The two audio effect nodes that I used were the Highshelf Filter and the Lowshelf Filter both which use a gain value of 10.
+
+I made two sprite classes
+I have the DurationTrack class which draws a circle that goes across the screen as the song is played showing how much time is left.  And I have the phylloFLower class which creates a looping circle effect around the timegear (topleft)
+
+In av-data.json I put The Title, the name of the audio track, and the initial state of the ui
+
+How I improved the aesthetics of the app over the AV HW is that I removed the gradient and cicle and replaced the background witch an image of the game that the audio track is from.  I edited the audio bars to be thicher and sit in the middle of the screen starting above and below the DurationTrack sprite.  I would give this a 5% maybe because I didn't do any substantial improvments and kept it very simple

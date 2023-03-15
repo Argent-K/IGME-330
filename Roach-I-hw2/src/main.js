@@ -12,9 +12,9 @@ import * as audio from './audio.js';
 import * as canvas from './canvas.js';
 
 const drawParams = {
-  showGradient  : true,
+  showGradient  : false,
   showBars      : true,
-  showCircles   : true,
+  showCircles   : false,
   showNoise     : false,
   showInvert    : false,
   showEmboss    : false
@@ -29,10 +29,11 @@ let highshelf = false;
 
 
 const init = () => {
-    
-	console.log("init called");
-	console.log(`Testing utils.getRandomColor() import: ${utils.getRandomColor()}`);
+  
+  loadJsonXHR();
+
   audio.setupWebaudio(DEFAULTS.sound1);
+  
 	let canvasElement = document.querySelector("canvas"); // hookup <canvas> element
 
   
@@ -44,17 +45,59 @@ const init = () => {
   loop();
 }
 
+const loadJsonXHR = () =>
+{
+  const url = "data/av-data.json";
+  const xhr = new XMLHttpRequest();
+  xhr.onload = (e) => {
+    console.log(`In onload - HTTP Status Code = ${e.target.status}`);
+    const string = e.target.responseText;
+    let json;
+    try {
+      json = JSON.parse(string);
+    } catch (err) {
+      console.log(`ERROR: ${err}`);
+      document.querySelector("#output").innterHTML = "JSON ERROR";
+      return;
+    }
+
+    // get values from json
+    //document.querySelector("#cb-highshelf").checked = json.uiState.treble;
+    drawParams.showBars = json.uiState.showBars
+
+    if(json.uiState.treble)
+    {
+      highshelf = document.querySelector("#cb-highshelf").checked = json.uiState.treble;
+      toggleHighshelf();
+    }
+
+    if(json.uiState.bass)
+    {
+      lowshelf = document.querySelector("#cb-lowshelf").checked = json.uiState.bass;
+      toggleLowshelf();
+    }
+
+    if(json.uiState.domainData)
+    {
+      document.querySelector("#cb-timedomain").checked = json.uiState.domainData;
+      canvas.ToggleDataType();
+    }
+    document.querySelector("#output").innerHTML = `Track: ${json.audio.name}`;
+
+    document.querySelector("#title").innerHTML = `${json.Title}`;
+  }
+  xhr.onerror = e => console.log(`In onerror - HTTP Status Code = ${e.target.status}`);
+  xhr.open("GET", url);
+  xhr.send();
+}
+
+
+
 const setupUI = (canvasElement) => {
   // A - hookup fullscreen button
   const fsButton = document.querySelector("#btn-fs");
   const playButton = document.querySelector("#btn-play");
-	
-  const gradientCB = document.querySelector("#cb-gradient");
   const barsCB = document.querySelector("#cb-bars");
-  const circlesCB = document.querySelector("#cb-circles");
-  const noiseCB = document.querySelector("#cb-noise");
-  const invertCB = document.querySelector("#cb-invert");
-  const embossCB = document.querySelector("#cb-emboss");
 
   // Filters
   document.querySelector('#cb-highshelf').checked = highshelf; // `highshelf` is a boolean we will declare in a second
@@ -78,29 +121,8 @@ const setupUI = (canvasElement) => {
     canvas.ToggleDataType();
   }
 
-
-  gradientCB.onchange = e => {
-    drawParams.showGradient = !drawParams.showGradient;
-  }
-
   barsCB.onchange = e => {
     drawParams.showBars = !drawParams.showBars;
-  }
-
-  circlesCB.onchange = e => {
-    drawParams.showCircles = !drawParams.showCircles;
-  }
-
-  noiseCB.onchange = e => {
-    drawParams.showNoise = !drawParams.showNoise;
-  }
-
-  invertCB.onchange = e => {
-    drawParams.showInvert = !drawParams.showInvert;
-  }
-
-  embossCB.onchange = e => {
-    drawParams.showEmboss = !drawParams.showEmboss;
   }
 
   // add .onclick event to button
@@ -123,26 +145,11 @@ const setupUI = (canvasElement) => {
         e.target.dataset.playing = "yes"; // our CSS will set the text to Pause
       
 
-
-
-
-
-
-
-
-
-
         // if track is playing, pause it
     } else {
         audio.pauseCurrentSound();
         e.target.dataset.playing = "no"; // our CSS will set the text to "play"
         audio.audioCtx.suspend();
-
-
-
-
-
-
     }
   };
 	
@@ -161,22 +168,16 @@ const setupUI = (canvasElement) => {
   volumeSlider.dispatchEvent(new Event("input"));
 
   // D - hookup track <select>
-  let trackSelect = document.querySelector("#track-select");
-  // add.onchange event to <select>
-  trackSelect.onchange = e => {
-    let file = e.target.value;
-    audio.loadSoundFile(file);
-
-
-
-
-
-
-    // pause the current track if it is playing
-    if (playButton.dataset.playing == "yes") {
-        playButton.dispatchEvent(new MouseEvent("click"));
-    }
-  }
+  // let trackSelect = document.querySelector("#track-select");
+  // // add.onchange event to <select>
+  // trackSelect.onchange = e => {
+  //   let file = e.target.value;
+  //   audio.loadSoundFile(file);
+  //   // pause the current track if it is playing
+  //   if (playButton.dataset.playing == "yes") {
+  //       playButton.dispatchEvent(new MouseEvent("click"));
+  //   }
+  // }
 
 } // end setupUI
 
