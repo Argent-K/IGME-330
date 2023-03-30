@@ -6,89 +6,328 @@
 	<style>
 		
 	</style>
-	<script>
-	
-	// START CODE
-	"use strict";
-	
-    let sum;
-
-    const addUp = (n1, n2) =>  n1 + n2;
-        
-
-
-    function test1() {
-        console.log("top of function",i, score);
-        for (var i =0; i<10; i++)
-        {
-            var score = 100;
-        }
-        console.log("bottom of function",i,score);
-
-
-        // "top of function" undefined undefined
-        // "bottom of function" 10 100
-    }
-
-    function test2() {
-        console.log("top of function",i,score);
-        for(let i = 0; i <10; i++)
-        {
-            let score = 100;
-        }
-        console.log("bottom of function",i,score);
-
-        // uncaugt referecne error i is not defined
-        // 
-    }
-
-    let score = 10;
-    function incrementScore(flag){
-        score ++;
-    if(flag) {
-            let score = 1000;
-            return score;
-        }
-        return score;
-    }
-        
-    const greet = (name) => {
-        return `hello   ${name}`;
-    }
-
-    function doubleIt(num) {
-        return num * 2;
-    }
-
-	const init = () => {
-		sum = addUp(5, 10);
-        test1();
-       // test2();
-
-        incrementScore();
-        console.log("Log #1", score);
-        console.log("Log #2", incrementScore(true));
-        console.log("Log #3", incrementScore(false));
-        console.log("Log #4", score);
-
-        console.log(greet());
-        console.log(doubleIt());
-
-        let htmlElement = document.querySelector(".my-class").innerHTML = "Hello";
-        let htmlElement2 = document.querySelector("#important").style.color = "red";
-        // Falsy values ( null, 0, false, undefined, "", NaN)
-
-
-        // import {addSum} from ""./utils.js"
-	};
-	
-	
-	window.onload = init;
-	
-	</script>
 </head>
 <body>
   <h2 class="my-class" id="important">Exam 1</h2>
+  <ol> Array Text Goes here
+  </ol>
 
+
+
+  <script>
+	
+	// START CODE
+    // Eliminates JavaScript silent errors
+    // Fixes errors that make it difficult for JavaScript to perform optimizations
+    // Prohibits syntax that is likely defind in future ECMAScript
+	"use strict";
+
+
+
+    // Function Declarations
+    // function addUp(a, b) {
+    //     return a + b;
+    // }
+
+    // const addUp = (a, b) => {return a + b };
+    // const addUp = (a,b) => a + b;
+
+    // Arrays
+    const colors = ["red","green","blue"];
+    // let html = "";
+    // colors.forEach(s => html += `<li>${s}</li>`);
+    // document.querySelector("ol").innerHTML = html;
+
+    // Array.Map | uses function to modify array keeps in array form.
+    let html = colors.map(s => `<li>${s}</li>`);
+
+    // Array.join joins an array into a string based on a delimter
+    html = html.join("");
+    document.querySelector("ol").innerHTML = html;
+
+    // Array.split splits string into array
+    let textArray = "How are you?".split(" ");
+    console.log(textArray);
+
+    document.querySelector("ol").style.color = "red";
+
+
+    // Adding event listeners
+    document.querySelector("ol").addEventListener('mouseover', () => console.log("Hello"));
+
+    document.querySelector("ol").onclick = () => document.querySelector("ol").style.color = "black";
+
+    // Template Literals
+    // just `${variable}`
+
+    // css selectors
+    // # = id
+    // . = class
+
+    // JavaScript event handlers point to Functions
+    
+
+    // Falsy values
+    // if(undefined) console.log("true");
+    // else console.log("false");
+    // if(null) console.log("true");
+    // else console.log("false");
+    // if(0) console.log("true");
+    // else console.log("false");
+    // if(-0) console.log("true");
+    // else console.log("false");
+    // if('') console.log("true");
+    // else console.log("false");
+    // if("") console.log("true");
+    // else console.log("false");
+    // if(NaN) console.log("true");
+    // else console.log("false");
+    // if(false) console.log("true");
+    // else console.log("false");
+    // if(0.1) console.log("true");
+    // else console.log("false");
+    // Empty Arrays are not falsy
+
+    // Termary Operators
+        // shorthand to make complex boolean expressions
+        let age = 32;
+        const beverage = age => 21 ? "Beer" : "Juice";
+        console.log(beverage(age));
+
+
+    // NaN vs Undefined
+    // NaN will return when an operation is performed between a number and nonnumber
+    // undefined will return when operation is performed between any other datatypes
+    // no variable = undef
+
+    // == equality check if values are the same
+    // === check if values and datatypes are the same
+
+    // pure function is one that takes values, modifies then returns
+    // values without any sideeffects
+
+    // XHR
+    // loads and parses external files
+    // xhr.responseText returns the text content of a file loaded in
+    // xhr.responseXML returns XML that is in a file
+    // Use .split(",") function to generate array values from CSV
+    // xhr.open("GET") xhr.send() functions at end to send the XHR request
+
+    // e.target reference
+    // e.target for an XHR object contains information about an XHR request
+        // e is the reference to the XHR object
+
+    // JSON
+    // efficient to store object(s) in an external file
+    // Syntax example
+
+        // {
+        //     "firstName" : "John",
+        //     "lastName" : "Doe",
+        //     "age" : 25,
+        //     "address" : {
+        //         "street" : "21 2nd Street",
+        //         "city" : "New York",
+        //         "state" : "NY"
+        //     },
+        //     "phoneNumbers" : [
+        //         {
+        //             "type" : "home",
+        //             "number" : "212 555-1234"
+        //         },
+        //         {
+        //             "type" : "office",
+        //             "number" : "646 555-4567"
+        //         }
+        //     ]
+        // }
+
+    // use JSON.Parse() to parse data from xhr.responseText()
+    // JSON keys can be refenced as jsonObjectName.key
+            // jsonObjectName["key"]
+            // these two will return values of the keys
+
+    // linting code
+    // Looks for potential erros in javascript syntax
+
+
+    // export
+    // enables modularization in a file
+    // either
+    // export function {...}
+    // or at bottom of file
+    // export {var, funct, ... }
+
+    // import
+    // import code from a modularizated file
+    // Syntax
+    //  import * as namespace from "./module-path"
+    //  import {export, export2, ...} from "./module-path"
+    //  import thing from "./module-path"
+
+
+
+    // IIFE
+    //  immediately invoked function expression
+    // (()=>{})()
+    // will encapsulate any code within itself, cannot be acceseed from outside
+    // not very useful because we now have ES6 modules
+
+
+    // canvas
+    // Default size 300 x 150 px
+    // getting ctx: canvs.getContex("2d");
+    // canvas properties
+    //  ctx.fillStyle
+    //      "#FFFFFF", "#FFF", "rgb(255, 255, 255)", "rgb(255, 255, 255, 1)"
+    //  ctx.strokeStyle
+    // ctx.lineWidth
+    
+    // canvas functions
+    //      ctx.fillRect(x, y, width, height)
+    //      ctx.strokeRect(x, y, width, height)
+    //      ctx.clearRect(x, y, width, height)
+
+    // Manual drawing functions
+    // ctx.BeginPath()
+    // ctx.rect(x,y,width,height)
+    // ctx.arc(x,y,radius,0,Math.PI * 2)
+    // ctx.moveTo(x,y)
+    // ctx.lineTo(x,y)
+    // ctx.drawImage(image, destX, destY, destWidht, destHeight)
+
+    // ctx.fill()
+    // ctx.stroke()
+    // ctx.closePath()
+
+    // ctx.save()
+    // ctx.restore()
+    // ctx.globalAplha
+    //
+    // Canvas Blending Modes
+    //      source => puts image in the foreground
+    //      destination => puts image in the background
+    //      source-atop => draws wherever the backgroun isn't transparent
+    //      Lighter => draws any part of images lighter than the background
+
+
+    // PreloadImage
+    // JavaScript funtion that preloads images
+    // PreloadImage(url, callback)
+
+    // gradients
+    // ctx.createLinearGradient(colorArgs)
+    // Canvas Transformations
+    //  ctx.translate(x, y)
+    // ctx.rotate(angle)
+
+
+    // setTimeout vs requestAnimationFrame
+    // setTimeOut(function, msDelay) => allows you to control how often the function is called
+    // requestAnimationFrame(function) doesntly allow you to control how often a function is called
+    // based on users hardware
+
+
+    // Array and Object Destructuring
+    //      Unpack values from arrays 
+
+
+    // Array Destructuring
+    let a;
+    [a] = [10];
+    let b;
+    let other;
+    [a, b, ...other] = [10, 10, 20, 30, 40];
+    // other will be 20, 30, 40
+
+    console.log(other);
+    console.log(b);
+
+
+
+
+    // Object Destructuring
+    const user = {
+        id: 42,
+        displayName: "jdoe",
+        fullName: {
+            firstName: "Jane",
+            lastName: "Doe",
+        },
+    };
+
+    function userId({id}) {
+        return id;
+    }
+
+    console.log(userId(user));
+
+
+    // obj and classes
+    // obj
+    let obj = new Object(); // obj constructor
+    let refTest = Object.create(obj);
+    
+    // New properties cannot be added to object
+    //obj.Object.seal();
+
+    // values within object are immutable and no new properties can be added
+    //obj.Object.freeze();
+    // You can stil change reference types within frozen objs
+
+    // Prototypes (you can create new key/value pairs for unfrozen unsealed objects by calling their variable and simply creating a property using it (a.property = ...))
+
+    obj.property = "banana";
+    obj.banana = 123;
+
+
+    // Classes
+    // always named a capital letter first
+
+    // Class name {}
+    // or 
+    // const name = Class{}
+
+    // constructor called with the new keyword
+    // constructor(arg1, arg2, arg3, ...) {
+        // super(..)
+        // this.arg1 = arg1;
+        // ...
+    // }
+
+    // super() = super constructor which calls the constructor of the parent class this is inheriting from
+    // child is parent but parent isn;t child
+
+    // object.assign()
+    // shorthand for assigning variables
+    // Object.assign(this, {parems});
+
+    // creating default constructor
+    // add = {} to the end of the constructor
+    // constructor() = {}
+
+
+    // WEB AUDIO
+
+    // chain of nodes that starts with the source (generates audio data) and ends with the destination (final output)
+    let audioCtx = new AudioContext();
+    //uses Uint8 arrays for spppeeeed
+
+    // Source.connect(analyserNode);
+    // analyserNode.connnect(destinationNode);
+    // analyserNode allows up to view waveform and spectrum audio data, which are stored in bins
+
+    // bins are stored in an array of values that represent the frequency spectrum of a sound, each stores a value from 0-255 and represents a range of rfrequencies in the song and how potent they are
+    // biquadFilterNodes used to control treble/bass of sound
+    // wave shapernodes can be used to control the distortion of a sound
+
+    // gain nodes should be placed after an anlyerr node in the node pipeline to make sure the audio waveform information is not tampered with when we get the data.
+    // That being said we can use treble and bass nodes before the analyserNode as they are meant to distort the information
+
+    // UNIX and NOde.js
+
+    
+
+	</script>
 </body>
 </html>
