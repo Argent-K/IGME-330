@@ -9,10 +9,24 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   
   <style>
-    
+    html, body { height: 100vh;}
+    .is-fullheight-100vh{
+        height:100vh;
+    }
+    body{
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+    #wrapper {
+        flex: 1;
+    }
   </style>
 </head>
 <body>
+<div class="" id="wrapper">
+
+
     <nav class="navbar has-shadow is-white is-fixed-top">
         <!-- logo / brand -->
         <div class="navbar-brand">
@@ -30,17 +44,16 @@
 
         <div class="navbar-menu" id="nav-links">
             <div class="navbar-end">
-                <a class="navbar-item">About</a>
-                <a class="navbar-item">Projects</a>
-                <a class="navbar-item">Contact</a>
-                <a class="navbar-item">Resume</a>
+                <!-- <a class="navbar-item">Projects</a> -->
+                <a class="navbar-item" href="#footer">Contact</a>
+                <a class="navbar-item" href="media/Resume-Iain-Roach.pdf" target="_blank">Resume</a>
 
             </div>
         </div>
     </nav>
     <div style="height: 100px;"></div>
 
-    <div class="hero is-large is-primary is-justify-content-center has-shadow" style="max-height: 250px; overflow: visible; margin-top: 1em;">
+    <div class="hero is-small is-primary is-justify-content-center has-shadow" style="max-height: fit-content; overflow: visible; margin-top: 1em;">
         <section class="section">
             <div class="container">
                 <div class="columns is-centered is-vcentered">
@@ -66,13 +79,15 @@
                 <div class="column is-4-tablet is-3-desktop">
                     <div class="card">
                         <div class="card-image has-text-centered px-1 py-1">
-                            <img src="media/wsvr.jpg" alt="World Sports VR Image">
+                            <a href="https://sciencedoge.itch.io/world-sports-vr" target="_blank"><img src="media/wsvr.jpg" alt="World Sports VR Image"></a>
                         </div>
                         <div class="card-content">
-                            <p class="title is-size-5">World Sports VR</p>
+                            <p class="title is-size-5">Icarus</p>
                         </div>
                         <footer class="card-footer">
-                            <p class="card-footer-item">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas labore dolorum voluptatibus. Esse rerum accusamus earum nobis ea ullam necessitatibus.</p>
+                            <p class="card-footer-item"> Icarus is a VR shooting game that uses both a bow and arrow and a pistol. It is being made in Unity using C# and the Open XR toolkit.
+                                </p>
+                                <!--There are several events in the game: Archery where you try to hit 10 targets as accurately and as fast as possible, Target Frenzy where using the pistol you try to shoot as many tagets as possible in 30 seconds, and Quick Draw where using the pistol you need to shoot five targets as fast as possible.-->
                         </footer>
                     </div>
                 </div>
@@ -82,10 +97,11 @@
                             <img src="media/wsvr.jpg" alt="World Sports VR Image">
                         </div>
                         <div class="card-content">
-                            <p class="title is-size-5">World Sports VR</p>
+                            <p class="title is-size-5">Icarus</p>
                         </div>
                         <footer class="card-footer">
-                            <p class="card-footer-item">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas labore dolorum voluptatibus. Esse rerum accusamus earum nobis ea ullam necessitatibus.</p>
+                            <p class="card-footer-item"> 
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas labore dolorum voluptatibus. Esse rerum accusamus earum nobis ea ullam necessitatibus.</p>
                         </footer>
                     </div>
                 </div>
@@ -105,43 +121,17 @@
             </div>
         </div>
     </section>
+</div>
+    <footer class="footer is-small mt-6" id="footer">
+        <div class="has-text-centered">
+            <h2 class="subtitle has-text-weight-bold is-size-3">Contact</h2>
+            <p>Email: roach.iain@gmail.com</p>
+            <p>Phone: (907)360-1840</p>
+            <p></p>
+        </div>
 
-    <div>https://sciencedoge.itch.io/world-sports-vr</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
-    <div>asdf</div>
+
+    </footer>
 
 <script src="src/index.js"></script>
 </body>
