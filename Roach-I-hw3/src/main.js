@@ -6,6 +6,32 @@ import { Favorite } from "./favorite.js";
 
 const submitClicked = (e) => {
   console.log("submitClicked");
+
+  let textField = document.querySelector("#favorite-text");
+  let urlField = document.querySelector("#favorite-url");
+  let commentsField = document.querySelector("#favorite-comments");
+
+
+  if(textField.value.trim() == "" || urlField.value.trim() == "" || commentsField.value.trim() == "")
+  {
+    console.log("Not all form fields filled");
+  }
+  else{
+    // Create new favorite instance and add to the favorites array
+    let newInstance = new Favorite(
+    crypto.randomUUID(),
+    textField.value,
+    urlField.value,
+    commentsField.value
+    );
+
+    favorites.push(newInstance);
+
+    // Create new bookmark component and add it to page by calling createBookmarkComponent()
+    createBookmarkComponent(newInstance.fid, newInstance.text, newInstance.url, newInstance.comments);
+  }
+
+
   e.preventDefault();
   return false;
 }
@@ -24,10 +50,14 @@ const createBookmarkComponent = (fid, text, url, comments) => {
   bm._fid = fid;
   //bm._url = url;
   //bm._comments = comments;
+  bm.dataset.fid = fid;
 
-  bm.setAttribute("data-url", url);
-  bm.setAttribute("data-text", text);
-  bm.setAttribute("data-comments", comments);
+  // bm.setAttribute("data-url", url);
+  bm.dataset.url = url;
+  //bm.setAttribute("data-text", text);
+  bm.dataset.text = text;
+  // bm.setAttribute("data-comments", comments);
+  bm.dataset.comments = comments;
   
 
   document.querySelector("#bookmarks").appendChild(bm);
