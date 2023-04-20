@@ -29,6 +29,7 @@ const submitClicked = (e) => {
 
     // Create new bookmark component and add it to page by calling createBookmarkComponent()
     createBookmarkComponent(newInstance.fid, newInstance.text, newInstance.url, newInstance.comments);
+    document.querySelector("#favnum").innerHTML = `Number of favorites: ${favorites.length}`;
   }
 
 
@@ -68,15 +69,42 @@ const loadFavoritesFromStorage = () => {
   {
     createBookmarkComponent(favorites[i].fid, favorites[i].text, favorites[i].url, favorites[i].comments);
   }
+  document.querySelector("#favnum").innerHTML = `Number of favorites: ${favorites.length}`;
 }
 
+const deleteFavorite = (fid) => {
+  // https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array-in-javascript
+  console.log(favorites);
+
+  let index = -1;
+  for(let i = 0; i < favorites.length; i++)
+  {
+    if(favorites[i].fid == fid)
+    {
+      index = i;
+    }
+  }
+
+  if (index > -1)
+  {
+    favorites.splice(index, 1);
+  }
+
+  document.querySelector("#favnum").innerHTML = `Number of favorites: ${favorites.length}`;
+
+  console.log(favorites);
+
+  document.querySelector("my-bookmark").remove;
+
+}
 
   document.querySelector("#favorite-submit-button").addEventListener("click", submitClicked);
   document.querySelector("#favorite-cancel-button").addEventListener("click", clearFormFields);
   let favorites = [];
   
   let fav = new Favorite(
-    crypto.randomUUID(),
+    //crypto.randomUUID(),
+    123,
     "RIT",
     "https://www.rit.edu",
     "A private university located near Rochester, NY."

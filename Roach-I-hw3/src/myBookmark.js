@@ -25,7 +25,7 @@ const template = document.createElement("template");
             </style>
             <div class="has-background-link pl-1 pr-1">
                 <span id="link" class="is-family-sans-serif">
-                    <a href="" class="has-text-light">???</a>
+                    <a href="" class="has-text-light" target="_blank">???</a>
                 </span>
                 <span id="buttons">
                     <button class="button is-success is-small">
