@@ -14,6 +14,7 @@ const submitClicked = (e) => {
   if(textField.value.trim() == "" || urlField.value.trim() == "" || commentsField.value.trim() == "")
   {
     console.log("Not all form fields filled");
+    document.querySelector("#warningText").innerHTML = "Missing Required Fields";
   }
   else{
     // Create new favorite instance and add to the favorites array
@@ -31,7 +32,8 @@ const submitClicked = (e) => {
     document.querySelector("#favnum").innerHTML = `Number of favorites: ${favorites.length}`;
 
     storage.setFavorites(favorites);
-    
+    clearFormFields(e);
+    document.querySelector("#warningText").innerHTML = "";
   }
 
 
@@ -62,7 +64,9 @@ const createBookmarkComponent = (fid, text, url, comments) => {
   // bm.setAttribute("data-comments", comments);
   bm.dataset.comments = comments;
 
-  document.querySelector("#bookmarks").appendChild(bm);
+  let newLi = document.createElement("li");
+  newLi.appendChild(bm);
+  document.querySelector("#bookmarks").appendChild(newLi);
 }
 
 const loadFavoritesFromStorage = () => {

@@ -145,13 +145,13 @@ const template = document.createElement("template");
 
 
 
-            document.querySelector("#favnum").innerHTML = `Number of favorites: ${_list.length}`;
+            document.querySelector("#favnum").innerHTML = `Number of favorites: ${favorites.length}`;
 
 
             let mark = document.querySelector("#bookmarks");
 
             mark.childNodes.forEach(a => {
-                if (a.dataset.fid == fid) {
+                if (a.children[0].dataset.fid == fid) {
                     a.remove();
                 }
             });
