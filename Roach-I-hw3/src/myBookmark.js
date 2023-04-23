@@ -1,3 +1,6 @@
+import { favorites } from "./main.js";
+import * as storage from "./storage.js";
+
 const template = document.createElement("template");
         template.innerHTML = `
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
@@ -28,7 +31,7 @@ const template = document.createElement("template");
                     <a href="" class="has-text-light" target="_blank">???</a>
                 </span>
                 <span id="buttons">
-                    <button class="button is-success is-small">
+                    <button class="button is-success is-small" disabled>
                         <span class="icon is-small">
                             <i class="fas fa-check"></i>
                         </span>
@@ -68,6 +71,14 @@ const template = document.createElement("template");
             // called when the component is inserted into the DOM
             connectedCallback() {
                 this.render();
+
+                this.shadowRoot.querySelector("#buttons").querySelector(".is-warning").addEventListener("click", (e) => {
+                    //delete favorite in here?
+                    //console.log(document.querySelector('my-bookmark[data-fid="123"]').getAttribute("data-fid"));
+                    //console.log(this.shadowRoot.host.dataset.fid);
+                    //console.log(e.shadowRoot.host);
+                    deleteFavorite(this.shadowRoot.host.dataset.fid, Array.from(document.querySelector("#bookmarks").children));
+                });
             }
 
             // this method is invoked each time one of the component's "watched" attributes changes
@@ -82,6 +93,10 @@ const template = document.createElement("template");
                 }
                 if (attributeName == "data-comments") {
                     this._comments = newValue;
+                }
+                if(attributeName == "data-fid")
+                {
+                    this._fid = newValue;
                 }
                 this.render();
             }
@@ -101,6 +116,51 @@ const template = document.createElement("template");
             }
         }
 
+
+        const deleteFavorite = (fid, _list) => {
+            // https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array-in-javascript
+            let index = -1;
+            for (let i = 0; i < _list.length; i++) {
+                if (_list[i].dataset.fid == fid) {
+                    index = i;
+                }
+            }
+
+            if (index > -1) {
+                _list.splice(index, 1);
+            }
+
+            index = -1;
+            for(let i = 0; i < favorites.length; i++)
+            {
+                if(favorites[i].fid == fid)
+                {
+                    index = i;
+                }
+            }
+
+            if(index > -1) {
+                favorites.splice(index, 1);
+            }
+
+
+
+            document.querySelector("#favnum").innerHTML = `Number of favorites: ${_list.length}`;
+
+
+            let mark = document.querySelector("#bookmarks");
+
+            mark.childNodes.forEach(a => {
+                if (a.dataset.fid == fid) {
+                    a.remove();
+                }
+            });
+
+            storage.setFavorites(favorites);
+        }
+
+
+        
         customElements.define('my-bookmark', MyBookmark);
 
-        export {MyBookmark}; 
+        export {MyBookmark, deleteFavorite}; 

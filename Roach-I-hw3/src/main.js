@@ -1,11 +1,10 @@
-import { MyBookmark } from "./myBookmark.js";
+import { MyBookmark, deleteFavorite } from "./myBookmark.js";
 import { Favorite } from "./favorite.js";
-
+import * as storage from "./storage.js";
 
 
 
 const submitClicked = (e) => {
-  console.log("submitClicked");
 
   let textField = document.querySelector("#favorite-text");
   let urlField = document.querySelector("#favorite-url");
@@ -30,6 +29,9 @@ const submitClicked = (e) => {
     // Create new bookmark component and add it to page by calling createBookmarkComponent()
     createBookmarkComponent(newInstance.fid, newInstance.text, newInstance.url, newInstance.comments);
     document.querySelector("#favnum").innerHTML = `Number of favorites: ${favorites.length}`;
+
+    storage.setFavorites(favorites);
+    
   }
 
 
@@ -48,7 +50,7 @@ const clearFormFields = (e) => {
 const createBookmarkComponent = (fid, text, url, comments) => {
   const bm = document.createElement("my-bookmark");
   //bm._text = text;
-  bm._fid = fid;
+  // bm._fid = fid;
   //bm._url = url;
   //bm._comments = comments;
   bm.dataset.fid = fid;
@@ -59,12 +61,12 @@ const createBookmarkComponent = (fid, text, url, comments) => {
   bm.dataset.text = text;
   // bm.setAttribute("data-comments", comments);
   bm.dataset.comments = comments;
-  
 
   document.querySelector("#bookmarks").appendChild(bm);
 }
 
 const loadFavoritesFromStorage = () => {
+  favorites = storage.getFavorites();
   for(let i = 0; i < favorites.length; i++)
   {
     createBookmarkComponent(favorites[i].fid, favorites[i].text, favorites[i].url, favorites[i].comments);
@@ -72,39 +74,18 @@ const loadFavoritesFromStorage = () => {
   document.querySelector("#favnum").innerHTML = `Number of favorites: ${favorites.length}`;
 }
 
-const deleteFavorite = (fid) => {
-  // https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array-in-javascript
-  console.log(favorites);
-
-  let index = -1;
-  for(let i = 0; i < favorites.length; i++)
-  {
-    if(favorites[i].fid == fid)
-    {
-      index = i;
-    }
-  }
-
-  if (index > -1)
-  {
-    favorites.splice(index, 1);
-  }
-
-  document.querySelector("#favnum").innerHTML = `Number of favorites: ${favorites.length}`;
-
-  console.log(favorites);
-
-  document.querySelector("my-bookmark").remove;
-
-}
-
   document.querySelector("#favorite-submit-button").addEventListener("click", submitClicked);
   document.querySelector("#favorite-cancel-button").addEventListener("click", clearFormFields);
-  let favorites = [];
+  // document.querySelector("#favorite-cancel-button").addEventListener("click", () => {
+  //   deleteFavorite(123);
+  // });
+
+  document.querySelector("#bookmarks")
+  
+  export let favorites = [];
   
   let fav = new Favorite(
-    //crypto.randomUUID(),
-    123,
+    crypto.randomUUID(),
     "RIT",
     "https://www.rit.edu",
     "A private university located near Rochester, NY."
@@ -118,8 +99,8 @@ const deleteFavorite = (fid) => {
   //   comments: "A private university located near Rochester, NY."
   // }
 
-  favorites[0] = fav;
-  console.log(favorites);
+  //favorites[0] = fav;
+  //console.log(favorites);
 
 
   loadFavoritesFromStorage();
