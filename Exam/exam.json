@@ -1,0 +1,20 @@
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "age": 25,
+    "address": {
+        "street": "21",
+        "city": "new york",
+        "state": "ny"
+    },
+    "phoneNumbers": [
+        {
+            "type": "home",
+            "number": "212 555-1234"
+        },
+        {
+            "type": "office",
+            "number": "646 666-4567"
+        }
+    ]
+}

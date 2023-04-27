@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Study</title>
+	<style>
+		
+	</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+// Variable Types
+// let - block scope and weakly typed
+//     - cannot be accessed before initialization
+
+// const - immutable varaibles
+//       - block scope
+//       - cannot accessed before initialization
+
+// var   - global or function scoped
+//       - will be hoisted so can be accessed anywhere
+//       - cringe
+
+// function declaration
+function addUp(a,b) {
+    return a+b;
+}
+
+const addUp1 = (a,b) => { return a + b; };
+const addUp2 = (a, b) => a + b;
+
+// Console is REPL - Read, Execute, Print, Loop
+
+// Arrays
+//   - stores varaibles in a sequence, don't have to be same data type in JavaScript
+//   - array methods:
+//       - array.forEach(x => {}) iterates through array and performs a function on each element
+//       - array.map(x => {}) iterates through array elements and performs a function on them
+//       - string.split("") splits a string into an array based on a delimiter passed into function
+//       - array.join("") joins an array into a string based on a delimiter passed into the function
+
+// "use strict" uses
+//   - eliminates javascript silent errors
+//   - fixes errors that makes it difficult for JavaScript to perform optimizations
+//   - prohibits syntax that is likely defined in future ECMASCript
+
+// Changing CSS in javascript
+//   - Use the .style<camelCaseStyleName> syntax to access styles from HTML elements
+
+// Adding event listeners to HTML elements
+//   - addEventListener("event", function)
+//   - element.event = function
+//   - No invocation operator on the functions because it will set the eventListener reference to undefined
+
+// Javscript template literals
+//   - `Some text goes here, and this is a variable: ${variable}
+
+// CSS Selectors
+//   - # = id
+//   - . = class
+
+// What do javascript handlers point to
+//   - Functions
+
+// Falsy Values
+//   - undefined
+//   - null
+//   - 0
+//   - -0
+//   - ''
+//   - ""
+//   - NaN
+//   - false
+
+// ** Empty arrays are not falsy ** //
+
+// Ternary Operators
+//   - shorthand to making complex boolean expressions
+//   - x =x.length ? truthy = falsy
+
+// NaN vs Undefined
+//   - NaN will return when an operation is performed between a number and a non number
+//   - undefined will return when an operation is performed between any other datatypes that results in an invalid value
+//   - When no variable is passed into a function, it defaults to undefined
+
+// == vs ===
+//   - the equality operator will check if the values are the same
+//   - the string (===) equality operator will check if values and datatypes are the same
+
+// Pure functions
+//   - function that takes values, modifies values and returns new values
+//   - without producing any side effects
+
+// XHR
+//   - 1. loads and parses external files
+//   - 2. xhr.responseText returns the text content of a file loaded in
+//   - 3. xhr.responseXML return XML that is in a file
+//   - 4. Use .split(",") function to generate array values from CSV
+//   - 5. xhr.open("GET") xhr.send() functions at the end to send the XHR request
+
+// e.target reference
+//   - e.target for an XHR object contains information about an XHR request
+//   - e is the reference to the XHR object
+
+// JSON
+//   - 1. Efficient way to store objest(s) in an external file
+//  Syntax example
+
+// {
+//     "firstName": "john",
+//     "lastName": "Doe",
+//     "age": 25,
+//     "address": {
+//         "street": "21 2nd Street",
+//         "city": "New York",
+//         "state": "NY"
+//     },
+//     "phoneNumbers":[
+//         {
+//             "type": "home",
+//             "number": "212 555-1234"
+//         },
+//         {
+//             "type": "office",
+//             "number": "646 555-4567"
+//         }
+//     ]
+// }
+
+// use JSON.Parse() to parse data from xhr.responseText()
+// JSON keys can be reference as:
+//   - jsonObjectName.key
+//   - jsonObjectName["key"]
+//   - (these will return values of the key)
+
+// Linting code
+//   - looks for potential errors in javascript syntax
+
+// Modeuls
+//   - process of subdiviing a program into separate sub-programs
+//   - eliminates the need for window.onload and "use strict"
+//   - maintains a level of encapsulation/boundaries between files
+//   - in script tag, add "type=module" to set a javascript file to web module
+
+// Export
+//   - enables modularization in a file
+//   - export function {...}
+//   - or at the bottom of a file,
+//       - export {var, funct, ...}
+
+// Import
+//   - imports code from a modularized file
+//   Syntax
+//       - import * as namespace from "./module-path"
+//       - import {export, export2, ...} from "./module-path"
+//       - import thing from "./module.path"
+
+// IIFE
+//   - immediately invoked function expression
+//   - (()=>{})()
+//   - will encapsulate any code itself, cannot be accessed from outside
+//   - not very useful because we now have es6 modules
+
+// Array and Object Destructuring
+//   - Allows us to unpack values from arrays, objects, properties, etc
+//   - array destructuring
+//       - let a;
+//       - [a] = [10];
+//       - let other;
+//       - [a,b, ... other] [10, 10, 20, 30, 40];
+//   - in this case, other is [20, 30, 40]
+
+//  Object destructuring
+//      - ({varName} = object);
+//          - extracts varName from object, stores it in variable
+//      - function usage
+//          - function({
+//              value: 3,
+//              value2: "Foo",
+//              value3: true
+//          })
+//          - allows us to pass parameters into a function in any order
+
+
+// Objects and Classes
+
+let obj = new Object();
+let ref = Object.create(obj) // creates new object from obj reference
+
+// object.seal() makes so properties cannot be added
+// obj.freeze() makes it so valuers within the object are immutable and no new properties can be added
+// still change ref types in obj.freeze
+
+// prototypes
+
+obj.banana = "bum";
+
+
+
+// class constructors
+// constructor(arg1,arg2,arg3, ...) {
+//     super();
+//     this.arg1 = arg1;
+// }
+
+// Reference vs value types
+
+// Web Audio
+
+// web audio order:> Source | everything else | analyser node | destination node
+
+
+// Unix commands and node
+
+//1. node <fileName> to run fileName through node.js interpreter
+//2. npm i cowsay to download cowsay package
+//3. npm run start
+//4. package.json
+//5. node_modules is the folder that contains the 3rd party .js files
+//6. npm i to reinstall all project dependencies
+
+//1. cd ..
+//2. pwd
+//3. ls 
+//4. ls -a
+//5. rename with . at beginning of name to make hidden
+//6 mkdir files
+//7 touch temp.txt
+//8 rm secrets.txt
+//9. rmdir temp-files
+//10. mv file1 file2
+//1. cp file1 file2
+//12. cat to-do.txt
+
+
+
+
+// Transpiling with webpack and babel
+// definitions
+// - Transpilers are tools that read source code written in one programming language and transforms it to equivalent code in another language
+// - Babel is a es6 to es5 transpiler
+
+// walkthrough
+// - 1. init npm
+// - 2. install webpack with npm
+// - 3. bundle code by running webpack (npm run webpack)
+// - 4. in HTML file change the js file sourced to npm run
+// - 5. use babel to transpile the bundled code from webpack
+
+// typescript
+// Definitions
+// - TypeScript is free open source programming language managed by microsoft it is strict superset of JavaScript
+// - transpiled into es5 vanilla js
+
+// Syntax
+// - let varName : type = value;
+// - functions have almost the same syntax, except you need to define arguments with explicit typing
+//   - function name(arg:type, arg2:type) {...}
+
+// interfaces
+// - like classes in javascript
+// - interface Name {
+//  Var1 : type,
+//  Var2 : type,
+//  Var3 : type
+// }
+// - creating instances of interfaces
+// let interfaceName:interfaceType = {
+// Var1: value,
+// Var2: value,
+// Var3: value
+// }
+
+// Enums
+// - works pretty much the same as C#
+// enum Name {
+//  Name1 = "val",
+//  Name2 = "val",
+//  Name3 = "val"
+// }
+
+// Unions/Union types
+// - used to specify a variable can be one of many values
+//      - let color:string = "red"|"green"|"blue"
+//          restricts what can be assigned to the variable
+
+// Type Assertion
+//  - Definition
+//       - Defines a variable to a specific type
+//       - Const canvas = document.querySelector("canvas") as HTMLCanvasElement
+//       - Basically like defining a generic type
+
+// MapBox
+// Definition
+//   - Mapbox is an api
+//   - requires special api key that is specific to the developer
+// Using Mapbox
+// - var map = new mapboxgl.Map({...}) -> init mapbox
+// - map.setZoom(number) -> set zoom of the map
+// - map.setCenter([x,y]) -> sets center of the map (array input)
+// - map.setPitch(Number) -> sets the pitch fo the map (orthographic view)
+// map.setBearing(Number) -> sets the bearing of the map (rotational view)
+// map.flyTo() -> updates the map location based on coordinate input
+
+// Web Component
+
+class ComponentName extends HTMLElement {
+    constructor() {
+        super();
+    }
+
+    connectedCallback() {}
+    disconnectedCallback() {}
+    attributeChangedCallback(attributeName, oldVal, newVal){}
+    static get observedAttributes() {
+        return ["data-name1", "data-name2", "data-namex"]
+    }
+}
+
+// Web component method explanattion
+// static get observedAttributes(){...} => checks for the data attrivutes attack to the web component and changes values in the element if they are observed
+
+// connectedCallback() => method that is called when the element is loaded in DOM
+
+// disconnectedCallback() => method that is called when the element is unloaded/disconnected from the DOM
+
+// attributeChangedCallback(...) => method that is called when an attribute chagnes values
+
+// render() => helper function that is used to render the web component
+
+// Attributes
+// - attributes are defeind within the web component in the HTML
+//          - <component data-attrib1="val"></component>
+// - use dataset.attribName to add an attribute to the element through code
+
+// Shadow DOM
+//  - A DOM that is scoped to web components within the regular DOM of the entire page
+//  - Isolates/encapsulates some styles/effects
+//  - has been used for a while on the web (ex: <video> has an encapsulated element)
+
+// this.attachShadow({mode: "open"});
+
+// this.shadowRoot.appendChild(template.content.cloneNode(true));
+
+// using the shadow dom makes sure you can't document.querySelector any encapsulated elements
+//      - you must include a reference to bulma scripts in the shadow root as well as where you are using it elsewhere just include the link tags again
+
+// Passing references to objects, arrays, and functions into web components
+//      In connectedCallback, call callback fuinction for the component (make default if a callback isnot assigned as a value)
+//      this.callback = this.callback || defaultCallback
+//      set this.callback to a function
+
+// Slots
+//  - Less complicated attribute system, but also less pweorful than just defining attributes
+//  - Defined as <slot></slot>, all code/information will be placed between the two slots
+// single slots
+//      put data between the slot tags in the html for the slots
+// MultiSlots
+//      Define names for the slots in the template HTML
+//          <slot name="name"></slot>
+//      In the DOM HTML, encapsulate the slots within the main element using spans
+//          <slot-elemnent>
+//              <span slot="slot-name">Data goes here</slot>
+//              <span slot="slot-name2">data goes here</slot>
+//          </slot-element>
+//
+
+// HTML element
+//      Allows us to make fragments of HTML that we can clone and insert into web components
+//      :host => refers to the hosting/top level webcomponent
+//      evt.preventDefault() => prevents HTML elemetns from acting normally useful for form fields and prevents archaic ehavior
+//      create a template by usiung document.createElement("template");
+//          set template innerHTML to whateva
+
+//  Local Storage
+//      Way to keep data in an application
+//      localStorage.getItem(itemName) gets data from local storage
+//      localStorage.setItem(itemName, JSON.stringify(values)) writes data down to local storage
+//      You must use JSON.parse(data) to turn local storage data into an object you can use (everything in the local storage is stored as a string) it is vice versa when you are sotring data (must use JSON.stringify(values));
+
+
+    </script>
+</body>
+</html>

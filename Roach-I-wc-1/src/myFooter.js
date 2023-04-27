@@ -21,6 +21,9 @@ class MyFooter extends HTMLElement {
         if (attributeName == "data-name") {
             this.name = newValue;
         }
+        if (attributeName == "data-year") {
+            this.year =newValue;
+        }
         this.render();
     }
 
