@@ -1,5 +1,5 @@
 // I. Variables & constants
-const accessToken = "";
+const accessToken = "pk.eyJ1IjoiYXJnZW50LWsiLCJhIjoiY2xnNzBhb2g3MDBhMDNubXYzOHVnY3lwciJ9.1pfrRkRNfxzsS9BNRR79BQ";
 let map;
 
 // An example of how our GeoJSON is formatted
@@ -37,10 +37,38 @@ const initMap = (center) => {
 		zoom: 5.2
 	});
 	map.addControl(new mapboxgl.NavigationControl({showCompass:false}));
+	// const clickHandler = (id) => alert(`${id} was clicked!`);
+    // addMarker(geojson.features[0], "poi", clickHandler);
 };
+
+const addMarker = (feature, className, clickHandler) => {
+	const el = document.createElement('div');
+	el.className = className;
+	el.id = feature.id;
+
+	const html = `<b>${feature.properties.title}</b>
+	<p>${feature.properties.address}</p>
+	<b>Phone: ${feature.properties.phone}</b>`;
+
+	const marker = new mapboxgl.Marker(el)
+	.setLngLat(feature.geometry.coordinates)
+	.setPopup(new mapboxgl.Popup({ offset: 10}).setHTML(html)).addTo(map);
+
+	el.addEventListener("click", () => clickHandler(marker._element.id));
+}
+
+
 
 
 // III. "public" - will be exported
+
+const addMarkersToMap = (json, clickHandler) => {
+	geojson = json;
+
+	for (const feature of geojson.features) {
+		addMarker(feature, "poi", clickHandler);
+	}
+};
 
 
 const flyTo = (center = [0,0]) => {
@@ -60,4 +88,4 @@ const setPitchAndBearing = (pitch=0,bearing=0) => {
 	map.setBearing(bearing);
 };
 
-export { initMap, flyTo, setZoomLevel, setPitchAndBearing };
+export { initMap, flyTo, setZoomLevel, setPitchAndBearing, addMarkersToMap };
